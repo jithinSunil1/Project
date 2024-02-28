@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><body>
+    <div id="tab">
+    <table cellpadding="10">
+        <tr>
+            <td>#</td>
+            <td>category</td>
+            <td>Description</td>
+            <td>User</td>
+            <td>Date</td>
+            <td>Action</td>
+        </tr>
+        {% for i in viewreq %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.cat.category_name}}</td>
+            <td>{{i.sendreq.sendreq_description}}</td>
+            <td>{{i.user.user_name}}</td>
+            <td>{{i.sendreq.request_date}}</td>
+            <td><a href="{% url 'webwardmember:Approve ' %}">Approve</a></td>
+            <td><a href="{% url 'webwardmember:Reject ' %}">Reject</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+</body>
+    
+</form>
+
+    
+</body>
+</html>

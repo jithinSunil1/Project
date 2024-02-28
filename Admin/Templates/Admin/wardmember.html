@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Wardname</td>
+            <td><select name="sel_ward" id="sel_ward">
+                <option value="">.Select.</option>
+                {% for i in ward %}
+                <option value="{{i.id}}">{{i.ward.ward_name}}</option>
+            {% endfor %}
+        </select></td>
+      
+        </tr>
+        <tr>
+            <td>wardmember name</td>
+            <td><input type="text" name="wmname" id=""></td>
+        </tr>
+        <tr>
+            <td>wardmember contact</td>
+            <td><input type="text" name="contact" id=""></td>
+        </tr>
+        <tr>
+            <td>wardmember Email</td>
+            <td><input type="text" name="email" id=""></td>
+        </tr>
+        <tr>
+            <td>wardmember Address</td>
+            <td><textarea name="address" id="" cols="30" rows="10"></textarea></td>
+        </tr>
+        <tr>
+            <td>wardmember photo</td>
+            <td><input type="file" name="photo" id=""></td>
+        </tr>
+        <tr>
+            <td>wardmember proof</td>
+            <td><input type="file" name="proof" id=""></td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td><input type="password" name="password" id=""></td>
+        </tr>
+        <tr>
+            <td>Confirm password</td>
+            <td><input type="password" name="cpassword" id=""></td>
+        </tr>
+       
+        <tr>
+            <td colspan="2"><input type="submit" value="submit"></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+ <table>
+    <tr>
+        <td>#</td>
+        <td>wardmember name</td>
+        <td>wardmember contact</td>
+        <td>wardmember email</td>
+        <td>wardmember address</td>
+        <td>Action</td>
+    </tr>
+    {% for i in wmname %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.wm.wardmember_name}}</td>
+        <td>{{i.wm.wardmember_contact}}</td>
+        <td>{{i.wm.wardmember_email}}</td>
+        <td>{{i.wm.wardmember_address}}</td>
+        <td>{{i.wm.wardmember_photo}}</td>
+ {% endfor %}   
+</body>
+</html>

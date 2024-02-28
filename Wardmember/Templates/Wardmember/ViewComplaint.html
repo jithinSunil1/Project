@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>complaint content</td>
+        <td>complaint date</td>
+    </tr>
+    {% for i in user %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.user.user_name}}</td>
+        <td>{{i.complaint.complaint_content}}</td>
+        <td>{{i.complaint.complaint_date}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

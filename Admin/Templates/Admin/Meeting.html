@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Meeting name</td>
+                <td><input type="text" name="mname" id="" value="{{meet_data.meeting_name}}"></td>
+            </tr>
+            <tr>
+                <td>Meeting time</td>
+                <td><input type="time" name="time" id=""></td>
+            </tr>
+            <tr>
+                <td>Meeting date</td>
+                <td><input type="date" name="date" id=""></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="submit"></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    <table>
+        <tr>
+            <td>#</td>
+            <td>Meeting name</td>
+            <td>Meeting time</td>
+            <td>Meeting date</td>
+
+            <td>Action</td>
+        </tr>
+        {% for i in meet %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.mname.meeting_name}}</td>
+            <td>{{i.mname.meeting_time}}</td>
+            <td>{{i.mname.meeting_date}}</td>
+            <td><a href="{% url 'webadmin:delmname' i.id %}">Delete</a></td>
+            <td><a href="{% url 'webadmin:editmname' i.id %}">Edit</a></td>
+
+        </tr>
+{% endfor %}
+</body>
+</html>
