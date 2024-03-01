@@ -12,10 +12,11 @@ urlpatterns = [
      path('Approve/<str:id>',views.Approve,name="Approve"),
      path('Reject/<str:id>',views.Reject,name="Reject"),
      path('homepage/',views.homepage,name="homepage"),
-      path('userreg/',views.userreg,name="userreg"),
-      path('Myprofile/',views.Myprofile,name="Myprofile"),
-      path('Viewcomplaint/',views.viewcomplaint,name="viewcomplaint"),
-     
+     path('userreg/',views.userreg,name="userreg"),
+     path('Myprofile/',views.Myprofile,name="Myprofile"),
+     path('Accept/',views.Accept,name="Accept"),
+     path('Reject/',views.Reject,name="Reject"),
+      
      
         
 

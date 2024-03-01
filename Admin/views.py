@@ -69,6 +69,7 @@ def wmname(request):
         ward_dict=ward.to_dict()
         result.append({'warddata':ward_dict,'wmname_data':wm_dict,'wmnameid':wm.id})
    if request.method=="POST":
+        
         email = request.POST.get("email")
         password = request.POST.get("password")
         try:
@@ -200,40 +201,37 @@ def editIname(request,id):
      else:
           return render(request,"Admin/Information.html",{"info_data":info}) 
 
-
 def viewcomplaint(request):
+    
     user_data=[]
     wm_data=[]
-    wm = db.collection("tbl_wardmember").stream()
-    for w in wm:
-        com = db.collection("tbl_complaint").where("wardmember_id", "!=","").where("complaint_status", "==", 0).stream()
-    for i in com:
-        wm_data.append({"complaint":i.to_dict(),"id":i.id,"wm":w.to_dict()})
-    user=db.collection("tbl_userreg").stream()
-    for u in user:
-         com=db.collection("tbl_complaint").where("user_id","==",u.id).where("complaint_status","==",0).stream()
-         for i in com:
-            user_data.append({"complaint":i.to_dict(),"id":i.id,"user":u.to_dict()})        
+    wcom = db.collection("tbl_complaint").where("wardmember_id", "!=",0).where("complaint_status", "==", 0).stream()
+    for i in wcom:
+        wdata = i.to_dict()
+        wm = db.collection("tbl_wardmember").document(wdata["wardmember_id"]).get().to_dict()
+        wm_data.append({"complaint":i.to_dict(),"id":i.id,"wm":wm})
+
+    ucom=db.collection("tbl_complaint").where("user_id","!=",0).where("complaint_status","==",0).stream()
+    for i in ucom:
+        udata = i.to_dict()
+        user = db.collection("tbl_user").document(udata["user_id"]).get().to_dict()
+        user_data.append({"complaint":i.to_dict(),"id":i.id,"user":user})  
     return render(request,"Admin/ViewComplaint.html",{"wm":wm_data,"user":user_data})    
 
+
 def viewfeedback(request):
-    # user_data=[]
+    
+    user_data=[]
     wm_data=[]
-    wm = db.collection("tbl_wardmember").stream()
-    for w in wm:
-        feed = db.collection("tbl_feedback").stream()
-    for i in feed:
-        wm_data.append({"feedback":i.to_dict(),"id":i.id,"wm":w.to_dict()})
-    # user=db.collection("tbl_userreg").stream()
-    # for u in user:
-    #      com=db.collection("tbl_complaint").where("user_id","==",u.id).where("complaint_status","==",0).stream()
-    #      for i in com:
-    #         user_data.append({"complaint":i.to_dict(),"id":i.id,"user":u.to_dict()})        
-    return render(request,"Admin/Viewfeedback.html",{"wm":wm_data})    
+    wfeed = db.collection("tbl_feedback").where("wardmember_id", "!=",0).stream()
+    for i in wfeed:
+        wdata = i.to_dict()
+        wm = db.collection("tbl_wardmember").document(wdata["wardmember_id"]).get().to_dict()
+        wm_data.append({"feedback":i.to_dict(),"id":i.id,"wm":wm})
 
-
-
-
-
-
-
+    ufeed=db.collection("tbl_feedback").where("user_id","!=",0).stream()
+    for i in ufeed:
+        udata = i.to_dict()
+        user = db.collection("tbl_user").document(udata["user_id"]).get().to_dict()
+        user_data.append({"feedback":i.to_dict(),"id":i.id,"user":user})  
+    return render(request,"Admin/Viewfeedback.html",{"wm":wm_data,"user":user_data})    

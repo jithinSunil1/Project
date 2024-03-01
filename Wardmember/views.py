@@ -54,7 +54,7 @@ def feedback(request):
         data=i.to_dict()
         feed_data.append({"feedback":data,"id":i.id})
     if request.method=="POST":
-        data={"feedback_content":request.POST.get("content"),"feedback_date":request.POST.get("date"),"wardmember_id":request.session[wmid]}
+        data={"feedback_content":request.POST.get("content"),"feedback_date":request.POST.get("date"),"wardmember_id":request.session["wmid"]}
         db.collection("tbl_feedback").add(data)
         return redirect("webwardmember:feedback")
     else:
@@ -66,7 +66,7 @@ def delfeedback(request,id):
     return redirect("webwardmember:feedback")
 
 def viewreq(request):
-    vreq = db.collection("tbl_sendreq").stream()
+    vreq = db.collection("tbl_sendreq").where("viewstatus","==",0).stream()
     vreq_data = []
     for i in vreq:
         c = i.to_dict()
@@ -76,13 +76,11 @@ def viewreq(request):
     return render(request,"Wardmember/Viewreq.html",{"viewreq":vreq_data})
 
 def Approve(request,id):
-    db.collection("tbl_viewreq").document(id).update({"viewreq_status":1})
-
+    db.collection("tbl_sendreq").document(id).update({"viewstatus":1})
     return redirect("webwardmember:viewreq")
 
 def Reject(request,id):
-    db.collection("tbl_viewreq").document(id).update({"viewreq_status":2})
-
+    db.collection("tbl_sendreq").document(id).update({"viewstatus":2})
     return redirect("webwardmember:viewreq")
 
 
@@ -90,6 +88,25 @@ def Myprofile(request):
     wm = db.collection("tbl_Wardmember").document(request.session["wmid"]).get().to_dict()
     return render(request,"Wardmember/Myprofile.html",{'wardmember':wm})
     
+def Accept(request):
+    vreq = db.collection("tbl_sendreq").where("viewstatus","==",1).stream()
+    vreq_data = []
+    for i in vreq:
+        c = i.to_dict()
+        cat = db.collection("tbl_category").document(c["sendreq_category"]).get().to_dict()
+        user = db.collection("tbl_user").document(c["user_id"]).get().to_dict()
+        vreq_data.append({"sendreq":i.to_dict(),"id":i.id,"cat":cat,"user":user})
+    return render(request,"Wardmember/AcceptReq.html",{"viewreq":vreq_data})
+
+def Reject(request):
+    vreq = db.collection("tbl_sendreq").where("viewstatus","==",2).stream()
+    vreq_data = []
+    for i in vreq:
+        c = i.to_dict()
+        cat = db.collection("tbl_category").document(c["sendreq_category"]).get().to_dict()
+        user = db.collection("tbl_user").document(c["user_id"]).get().to_dict()
+        vreq_data.append({"sendreq":i.to_dict(),"id":i.id,"cat":cat,"user":user})
+    return render(request,"Wardmember/RejectReq.html",{"viewreq":vreq_data})
 
 
 
@@ -128,14 +145,6 @@ def userreg(request):
     else:
         return render(request,"Wardmember/Userreg.html",{"ward":ward_data})
     
-def viewcomplaint(request):
-    user_data=[]
-    user=db.collection("tbl_userreg").stream()
-    for u in user:
-        com=db.collection("tbl_complaint").where("user_id","==",u.id).where("complaint_status","==",0).stream()
-        for i in com:
-            user_data.append({"complaint":i.to_dict(),"id":i.id,"user":u.to_dict()})        
-    return render(request,"wardmember/ViewComplaint.html",{"user":user_data})    
 
 
     
