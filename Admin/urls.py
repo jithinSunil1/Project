@@ -23,6 +23,8 @@ urlpatterns = [
         path('Viewfeedback/',views.viewfeedback,name="viewfeedback"),
         path('Admin/',views.admin,name="Admin"),
         path('Homepage/',views.homepage,name="homepage"),
+        path('Resources/',views.resources,name="Resources"),
+        path('delresources/<str:id>',views.delresources,name="delresources"),
 
         
         

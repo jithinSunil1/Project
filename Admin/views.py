@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 import firebase_admin 
 from firebase_admin import firestore,credentials,storage,auth
 import pyrebase
+from datetime import date,datetime
+
 
 db=firestore.client()
 
@@ -252,3 +254,24 @@ def admin(request):
 
 def homepage(request):
     return render(request,"Admin/Homepage.html")
+
+
+def resources(request):
+    res=db.collection("tbl_Resources").stream()
+    res_data=[]
+    for i in res:
+        data=i.to_dict()
+        res_data.append({"res":data,"id":i.id})
+    if request.method=="POST":
+        datedata =date.today()
+        data={"project_name":request.POST.get("name"),"Description":request.POST.get("dis"),"project_date":str(datedata)}
+        db.collection("tbl_Resources").add(data)
+        return redirect("webadmin:Resources")
+    else:
+        return render(request,"Admin/Resources.html",{"res":res_data})
+    
+
+def delresources(request,id):
+    db.collection("tbl_Resources").document(id).delete()
+    return redirect("webadmin:Resources")
+

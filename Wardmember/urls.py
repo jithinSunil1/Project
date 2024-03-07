@@ -18,8 +18,13 @@ urlpatterns = [
      path('Rejected/',views.Rejected,name="Rejected"),
      path('changepassword/',views.changepassword,name="changepassword"),
      path('Editprofile/',views.Editprofile,name="Editprofile"),
+     path("viewres/",views.viewres,name="viewres"),
+     path('view_user/',views.view_user,name="view_user"),
       
      
-        
+     path('chat/<str:id>',views.chat,name="chat"),
+     path('ajaxchat/',views.ajaxchat,name="ajaxchat"),
+     path('ajaxchatview/',views.ajaxchatview,name="ajaxchatview"),
+     path('clearchat/',views.clearchat,name="clearchat"),  
 
 ]

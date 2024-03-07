@@ -248,10 +248,10 @@
             <div class="head-sec" id="changeable">
                 <div class="content">
                     <div>
-                        <img src="{{user.wardmember_photo}}" width="40px" height="40px" style="border-radius: 50%;" alt="">
+                        <img src="{{user.user_photo}}" width="40px" height="40px" style="border-radius: 50%;" alt="">
                     </div>
                     <div class="font">
-                        {{user.wardmember_name}}
+                        {{user.user_name}}
                         <input type="hidden" name="txt_id" id="txt_id" value="{{tid}}">
                     </div>
                 </div>
@@ -266,6 +266,7 @@
             </div>
            <div class="scroll-con" id="sc-down">
             <div class="con-card" id="conversation">
+                
             </div>
            </div>
             <div class="message-card">
@@ -310,7 +311,7 @@
             fd.append("file",file)
             fd.append("tid",tid)
             fd.append("msg",msg)
-            var ur = "{% url 'webuser:ajaxchat' %}"
+            var ur = "{% url 'webwardmember:ajaxchat' %}"
             var csrftoken = getCookie('csrftoken');
             $.ajax({
                 type:'POST',
@@ -338,7 +339,7 @@
 
     function viewChat() {
         var id = document.getElementById("txt_id").value
-        var ur = "{% url 'webuser:ajaxchatview' %}"
+        var ur = "{% url 'webwardmember:ajaxchatview' %}"
         $.ajax({
             url: ur,
             data: { tid: id, },
@@ -363,7 +364,7 @@
 
     function clearchat() {
         var id = document.getElementById("txt_id").value
-        var ur = "{% url 'webuser:clearchat' %}"
+        var ur = "{% url 'webwardmember:clearchat' %}"
         document.getElementById("b-page").style.display = "block"
         $.ajax({
             url: ur,
