@@ -25,7 +25,7 @@
             <td>{{i.sendreq.request_date}}</td>
            
             <td><a href="{% url 'webwardmember:Reject' i.id %}">Reject</a></td>
-            
+            <td><a href="{% url 'webwardmember:chat' %}">Chat</a></td>
         </tr>
         {% endfor %}
     </table>

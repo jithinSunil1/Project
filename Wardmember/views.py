@@ -3,6 +3,9 @@ import firebase_admin
 from firebase_admin import firestore,credentials,storage,auth
 import pyrebase
 from datetime import date
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
 
 db=firestore.client()
 
@@ -77,17 +80,57 @@ def viewreq(request):
 
 def Approve(request,id):
     db.collection("tbl_sendreq").document(id).update({"viewstatus":1})
-    return redirect("webwardmember:viewreq")
+    user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
+    email = user["user_email"]
+    send_mail(
+    'REPLY FOR UR REQUEST ', 
+    "\rHello \r\nYour request has been accepted",#body
+    settings.EMAIL_HOST_USER,
+    [email],
+    )
+    return render(request,"Wardmember/Homepage.html",{"msg":email})
+    
 
 def Reject(request,id):
     db.collection("tbl_sendreq").document(id).update({"viewstatus":2})
-    return redirect("webwardmember:viewreq")
+    
+    user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
+    email = user["user_email"]
+    send_mail(
+    'REPLY FOR UR REQUEST ', 
+    "\rHello \r\nYour request has been accepted",#body
+    settings.EMAIL_HOST_USER,
+    [email],
+    )
+    return render(request,"Wardmember/Homepage.html",{"msg":email})
 
 
 def Myprofile(request):
-    wm = db.collection("tbl_Wardmember").document(request.session["wmid"]).get().to_dict()
-    return render(request,"Wardmember/Myprofile.html",{'wardmember':wm})
-    
+    wm = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
+    return render(request,"Wardmember/Myprofile.html",{'wm':wm})
+
+def Editprofile(request):
+  wm = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
+  if request.method=="POST":
+    data={"wardmember_name":request.POST.get("name"),"wardmember_contact":request.POST.get("contact"),"wardmember_address":request.POST.get("address")}
+    db.collection("tbl_wardmember").document(request.session["wmid"]).update(data)
+    return redirect("webwardmember:Myprofile")
+  else:
+    return render(request,"Wardmember/EditProfile.html",{"wm":wm})      
+
+def changepassword(request):
+  wm = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
+  email = wm["wardmember_email"]
+  password_link = firebase_admin.auth.generate_password_reset_link(email) 
+  send_mail(
+    'Reset your password ', 
+    "\rHello \r\nFollow this link to reset your Project password for your " + email + "\n" + password_link +".\n If you didn't ask to reset your password, you can ignore this email. \r\n Thanks. \r\n Your D MARKET user.",#body
+    settings.EMAIL_HOST_USER,
+    [email],
+  )
+  return render(request,"Wardmember/Homepage.html",{"msg":email})
+
+
 def Accept(request):
     vreq = db.collection("tbl_sendreq").where("viewstatus","==",1).stream()
     vreq_data = []
@@ -98,7 +141,7 @@ def Accept(request):
         vreq_data.append({"sendreq":i.to_dict(),"id":i.id,"cat":cat,"user":user})
     return render(request,"Wardmember/AcceptReq.html",{"viewreq":vreq_data})
 
-def Reject(request):
+def Rejected(request):
     vreq = db.collection("tbl_sendreq").where("viewstatus","==",2).stream()
     vreq_data = []
     for i in vreq:

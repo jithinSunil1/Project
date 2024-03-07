@@ -235,3 +235,20 @@ def viewfeedback(request):
         user = db.collection("tbl_user").document(udata["user_id"]).get().to_dict()
         user_data.append({"feedback":i.to_dict(),"id":i.id,"user":user})  
     return render(request,"Admin/Viewfeedback.html",{"wm":wm_data,"user":user_data})    
+
+
+def admin(request):
+    if request.method =="POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        try:
+            admin = firebase_admin.auth.create_user(email=email,password=password)
+        except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
+            return render(request,"Admin/Admin.html",{"msg":error})
+        db.collection("tbl_admin").add({"admin_id":admin.uid,"admin_name":request.POST.get("name"),"admin_contact":request.POST.get("contact"),"admin_email":request.POST.get("email")})    
+        return render(request,"Admin/Admin.html")
+    else:
+        return render(request,"Admin/Admin.html")
+
+def homepage(request):
+    return render(request,"Admin/Homepage.html")

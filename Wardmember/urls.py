@@ -15,7 +15,9 @@ urlpatterns = [
      path('userreg/',views.userreg,name="userreg"),
      path('Myprofile/',views.Myprofile,name="Myprofile"),
      path('Accept/',views.Accept,name="Accept"),
-     path('Reject/',views.Reject,name="Reject"),
+     path('Rejected/',views.Rejected,name="Rejected"),
+     path('changepassword/',views.changepassword,name="changepassword"),
+     path('Editprofile/',views.Editprofile,name="Editprofile"),
       
      
         

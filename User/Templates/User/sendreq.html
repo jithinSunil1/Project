@@ -45,9 +45,10 @@
         {% for i in send %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{i.cat.sendreq_category}}</td>
+            <td>{{i.cat.category_name}}</td>
             <td>{{i.send.sendreq_description}}</td>
             <td>{{i.wardmember.wardmember_name}}</td>
+           <td><a href="{% url 'webuser:chat' i.wardmemberid %}">Chat</a></td>
             
         </tr>
 {% endfor %}

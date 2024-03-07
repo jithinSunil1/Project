@@ -28,6 +28,7 @@ st = firebase.storage()
 def Login(request): 
     userid = ""
     wmnameid =""
+    adminid=""
 
     if request.method=="POST":
         email = request.POST.get("email")  
@@ -42,13 +43,19 @@ def Login(request):
         wmname=db.collection("tbl_wardmember").where("wardmember_id","==",data["localId"]).stream()
         for i in wmname:
             wmnameid=i.id
+        admin=db.collection("tbl_admin").where("admin_id","==",data["localId"]).stream()
+        for i in admin:
+            adminid=i.id    
         if userid:
             request.session["uid"]= userid
             return redirect("webuser:homepage")
         elif wmnameid:
             request.session["wmid"]= wmnameid
             return redirect("webwardmember:homepage")
-        else:    
+        elif adminid:
+            request.session["aid"]=adminid
+            return redirect("webadmin:homepage")
+        else:
             return render(request,"Guest/Login.html",{"msg":"error"})    
     else:
         return render(request,"Guest/Login.html")

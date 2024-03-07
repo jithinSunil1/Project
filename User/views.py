@@ -5,7 +5,7 @@ import pyrebase
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from datetime import date
+from datetime import date,datetime
 
 db=firestore.client()
 # Create your views here.
@@ -61,7 +61,13 @@ def Request(request):
         return render(request,"User/Request.html",{"req":req_data})    
     
 def homepage(request):
-    return render(request,"User/homepage.html")
+    user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
+    ward = user["ward_id"]
+    wardd_member = db.collection("tbl_wardmember").where("ward_id", "==", ward).stream()
+    wmid = ""
+    for i in wardd_member:
+        wmid = i.id
+    return render(request,"User/homepage.html",{"wardmember":wmid})
 
 
 def sendreq(request):
@@ -76,7 +82,9 @@ def sendreq(request):
     for i in send_data:
         data=i.to_dict()
         wardmember=db.collection("tbl_wardmember").document(data["wardmember_id"]).get().to_dict()
-        result.append({"send":data,"id":i.id,"wardmember":wardmember,"cat":cat})
+        cate = db.collection("tbl_category").document(data["sendreq_category"]).get().to_dict()
+        print(cate)
+        result.append({"send":data,"id":i.id,"wardmember":wardmember,"cat":cate,"wardmemberid":data["wardmember_id"]})
     if request.method=="POST":
         
         user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
@@ -129,3 +137,42 @@ def changepassword(request):
   )
   return render(request,"User/Homepage.html",{"msg":email})
 
+##########################################################################################################################
+
+def chat(request,id):
+    to_user = db.collection("tbl-wardmember").document(id).get().to_dict()
+    return render(request,"User/Chat.html",{"user":to_user,"tid":id})
+
+def ajaxchat(request):
+    image = request.FILES.get("file")
+    tid = request.POST.get("tid")
+    if image:
+        path = "ChatFiles/" + image.name
+        sd.child(path).put(image)
+        d_url = sd.child(path).get_url(None)
+        db.collection("tbl_chat").add({"chat_content":"","chat_time":datetime.now(),"user_from":request.session["uid"],"user_to":request.POST.get("tid"),"chat_file":d_url})
+        return render(request,"User/Chat.html",{"tid":tid})
+    else:
+        db.collection("tbl_chat").add({"chat_content":request.POST.get("msg"),"chat_time":datetime.now(),"user_from":request.session["uid"],"user_to":request.POST.get("tid"),"chat_file":""})
+        return render(request,"User/Chat.html",{"tid":tid})
+
+def ajaxchatview(request):
+    tid = request.GET.get("tid")
+    user_ref = db.collection("tbl_chat")
+    chat = db.collection("tbl_chat").order_by("chat_time").stream()
+    data = []
+    for c in chat:
+        cdata = c.to_dict()
+        if ((cdata["user_from"] == request.session["uid"]) | (cdata["user_to"] == request.session["uid"])) & ((cdata["user_from"] == tid) | (cdata["user_to"] == tid)):
+            data.append(cdata)
+    return render(request,"User/ChatView.html",{"data":data,"tid":tid})
+
+def clearchat(request):
+    toid = request.GET.get("tid")
+    chat_data1 = db.collection("tbl_chat").where("user_from", "==", request.session["uid"]).where("user_to", "==", request.GET.get("tid")).stream()
+    for i1 in chat_data1:
+        i1.reference.delete()
+    chat_data2 = db.collection("tbl_chat").where("user_to", "==", request.session["uid"]).where("user_from", "==", request.GET.get("tid")).stream()
+    for i2 in chat_data2:
+        i2.reference.delete()
+    return render(request,"User/ClearChat.html",{"msg":"Chat Cleared Sucessfully....."})

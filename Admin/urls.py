@@ -21,6 +21,8 @@ urlpatterns = [
         path('editinformation/<str:id>',views.editIname,name="editIname"),
         path('Viewcomplaint/',views.viewcomplaint,name="viewcomplaint"),
         path('Viewfeedback/',views.viewfeedback,name="viewfeedback"),
+        path('Admin/',views.admin,name="Admin"),
+        path('Homepage/',views.homepage,name="homepage"),
 
         
         
