@@ -3,7 +3,9 @@ import firebase_admin
 from firebase_admin import firestore,credentials,storage,auth
 import pyrebase
 from datetime import date,datetime
-
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
 
 db=firestore.client()
 
@@ -71,25 +73,39 @@ def wmname(request):
         ward_dict=ward.to_dict()
         result.append({'warddata':ward_dict,'wmname_data':wm_dict,'wmnameid':wm.id})
    if request.method=="POST":
-        
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-        try:
-            wardmember = firebase_admin.auth.create_user(email=email,password=password)
-        except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
-            return render(request,"Wardmember/Userreg.html",{"msg":error})
-        image = request.FILES.get("photo")
-        if image:
-            path = "WardmemberPhoto/" + image.name
-            st.child(path).put(image)
-            d_url = st.child(path).get_url(None)
-        proof = request.FILES.get("proof")
-        if proof:
-            path = "WardmemberProof/" + proof.name
-            st.child(path).put(proof)
-            u_url = st.child(path).get_url(None)
-        db.collection("tbl_wardmember").add({"wardmember_id":wardmember.uid,"wardmember_name":request.POST.get("wmname"),"wardmember_contact":request.POST.get("contact"),"wardmember_email":request.POST.get("email"),"wardmember_address":request.POST.get("address"),"wardmember_photo":d_url, "wardmember_proof":u_url,"ward_id":request.POST.get("sel_ward")})
-        return redirect("webadmin:wmname")  
+        wmcount = db.collection("tbl_wardmember").where("ward_id", "==", request.POST.get("sel_ward")).stream()
+        count = 0
+        for wmc in wmcount:
+            count = count + 1
+        if count == 0:       
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            try:
+                wardmember = firebase_admin.auth.create_user(email=email,password=password)
+            except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
+                return render(request,"Wardmember/Userreg.html",{"msg":error})
+            image = request.FILES.get("photo")
+            if image:
+                path = "WardmemberPhoto/" + image.name
+                st.child(path).put(image)
+                d_url = st.child(path).get_url(None)
+
+            proof = request.FILES.get("proof")
+            if proof:
+                path = "WardmemberProof/" + proof.name
+                st.child(path).put(proof)
+                u_url = st.child(path).get_url(None)
+            
+            send_mail(
+                'Account Details ', #subject
+                "\rHello \r\nFollow is ur email " + email + "\n"  +".\n this is ur password"+password,#body
+                settings.EMAIL_HOST_USER,
+                [email],
+            )   
+            db.collection("tbl_wardmember").add({"wardmember_id":wardmember.uid,"wardmember_name":request.POST.get("wmname"),"wardmember_contact":request.POST.get("contact"),"wardmember_email":request.POST.get("email"),"wardmember_address":request.POST.get("address"),"wardmember_photo":d_url, "wardmember_proof":u_url,"ward_id":request.POST.get("sel_ward")})
+            return redirect("webadmin:wmname")  
+        else:
+            return render(request,"Admin/wardmember.html",{"msg":"Ward Member Already registred for this ward.."})
    else:
     return render(request,"Admin/wardmember.html",{"wm":wm_data,"ward":ward_data})
    

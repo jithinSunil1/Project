@@ -76,4 +76,10 @@
         <td>{{i.wm.wardmember_photo}}</td>
  {% endfor %}   
 </body>
+{% if msg %}
+<script>
+    alert("{{msg}}")
+    window.location = "{% url 'webadmin:wmname' %}"
+</script>
+{% endif %}
 </html>

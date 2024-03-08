@@ -163,6 +163,15 @@ def Rejected(request):
         vreq_data.append({"sendreq":i.to_dict(),"id":i.id,"cat":cat,"user":user})
     return render(request,"Wardmember/RejectReq.html",{"viewreq":vreq_data})
 
+def viewresreq(request):
+  resq=db.collection("tbl_Resources").stream()
+  resq_data=[]
+  for i in resq:
+    data=i.to_dict()
+    user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+    resq_data.append({"resq":data,"id":i.id,"user":user})
+  return render(request,"Wardmember/viewresreq.html",{"resq":resq_data})    
+
 
 
 
@@ -226,6 +235,7 @@ def ajaxchat(request):
         return render(request,"Wardmember/Chat.html",{"tid":tid})
     else:
         if request.POST.get("msg")!="":
+            
             db.collection("tbl_chat").add({"chat_content":request.POST.get("msg"),"chat_time":datetime.now(),"member_from":request.session["wmid"],"user_to":request.POST.get("tid"),"chat_file":"","member_to":"","user_from":""})
         return render(request,"Wardmember/Chat.html",{"tid":tid})
 

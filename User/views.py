@@ -71,7 +71,7 @@ def Request(request):
         data=i.to_dict()
         req_data.append({"Request":data,"id":i.id})
     if request.method=="POST":
-        data={"Request_description":request.POST.get("description"),"Request_date":request.POST.get("date")}
+        data={"user-id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":request.POST.get("date")}
         db.collection("tbl_Request").add(data)
         return redirect("webuser:Request")
     else:

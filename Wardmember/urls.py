@@ -20,7 +20,8 @@ urlpatterns = [
      path('Editprofile/',views.Editprofile,name="Editprofile"),
      path("viewres/",views.viewres,name="viewres"),
      path('view_user/',views.view_user,name="view_user"),
-      
+     path('viewresreq/',views.viewresreq,name="viewresreq"),
+
      
      path('chat/<str:id>',views.chat,name="chat"),
      path('ajaxchat/',views.ajaxchat,name="ajaxchat"),
