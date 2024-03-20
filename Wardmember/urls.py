@@ -21,6 +21,10 @@ urlpatterns = [
      path("viewres/",views.viewres,name="viewres"),
      path('view_user/',views.view_user,name="view_user"),
      path('viewresreq/',views.viewresreq,name="viewresreq"),
+     path('meeting/',views.mname,name="mname"),
+     path('delmname/<str:id>',views.delmname,name="delmname"),
+     path('editmname/<str:id>',views.editmname,name="editmname"),
+     path('logout/',views.logout,name="logout"),
 
      
      path('chat/<str:id>',views.chat,name="chat"),

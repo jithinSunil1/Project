@@ -13,7 +13,7 @@ urlpatterns = [
         path('category/',views.catname,name="catname"),
         path('delcategory/<str:id>',views.delcatname,name="delcatname"),
         path('editcategory/<str:id>',views.editcatname,name="editcatname"),
-        path('meeting/',views.mname,name="mname"),
+        path('mname/',views.mname,name="mname"),
         path('delmname/<str:id>',views.delmname,name="delmname"),
         path('editmname/<str:id>',views.editmname,name="editmname"),
         path('information/',views.Iname,name="Iname"),
@@ -25,7 +25,7 @@ urlpatterns = [
         path('Homepage/',views.homepage,name="homepage"),
         path('Resources/',views.resources,name="Resources"),
         path('delresources/<str:id>',views.delresources,name="delresources"),
-
+        path("logout/",views.logout,name="logout"),
         
         
 

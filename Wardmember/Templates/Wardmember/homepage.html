@@ -1,3 +1,4 @@
+{% load  static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<!-- <body>
     <a href="{% url 'webwardmember:viewreq' %}">viewreq</a>
     <a href="{% url 'webwardmember:Myprofile' %}">Myprofile</a>
     <a href="{% url 'webwardmember:complaint' %}">complaint</a>
@@ -15,7 +16,7 @@
     <a href="{% url 'webwardmember:Rejected' %}">Reject</a>
     <a href="{% url 'webwardmember:viewres' %}">ViewResources</a>
 </body>
-</html>
+</html> -->
 
 
 
@@ -30,7 +31,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{% static 'Wardmember/img/favicon.ico'%}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,17 +47,17 @@
     <link href="lib/animate/animate.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'Wardmember/css/bootstrap.min.css'%}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{% static 'Wardmember/css/style.css'%}" rel="stylesheet">
 </head>
 
 <body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner"></div>
-    </div>
+    </div> 
     <!-- Spinner End -->
 
 
@@ -95,37 +96,44 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Services</a>
-                    <div class="nav-item dropdown">
+                    <a href="{% url 'webwardmember:userreg' %}" class="nav-item nav-link active">User Registeration</a>
+                    <a href="{% url 'webwardmember:viewreq' %}" class="nav-item nav-link active">view Request</a>
+                    <a href="{% url 'webwardmember:Myprofile' %}" class="nav-item nav-link">My Profile</a>
+                    <a href="{% url 'webwardmember:complaint' %}" class="nav-item nav-link">Complaint</a>
+                    <a href="{% url 'webwardmember:feedback' %}" class="nav-item nav-link">Feedback</a>
+                    <a href="{% url 'webwardmember:Accept' %}" class="nav-item nav-link">Accept</a>
+                    <a href="{% url 'webwardmember:mname' %}" class="nav-item nav-link">Meeting</a>
+                    <a href="{% url 'webwardmember:logout' %}" class="nav-item nav-link">Logout</a>
+                    <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu m-0">
-                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                            <a href="detail.html" class="dropdown-item">Blog Detail</a>
+                            <a href="{% url 'webwardmember:feedback' %}" class="dropdown-item">Feedback</a>
+                            <a href="{% url 'webwardmember:Accept' %}" class="dropdown-item">Accept</a>
+                            <a href="{% url 'webwardmember:feedback' %}" class="dropdown-item">Feedback</a>
+                            <a href="{% url 'webwardmember:Accept' %}" class="dropdown-item">Accept</a>
                         </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
+                    </div> -->
+                     <div class="nav-item dropdown">
+                        <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a> -->
+                        <!-- <div class="dropdown-menu m-0">
                             <a href="price.html" class="dropdown-item">Pricing Plan</a>
                             <a href="feature.html" class="dropdown-item">Our features</a>
                             <a href="team.html" class="dropdown-item">Team Members</a>
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                             <a href="quote.html" class="dropdown-item">Free Quote</a>
-                        </div>
+                        </div> -->
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <!-- <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
                 <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
-                <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Download Pro Version</a>
-            </div>
+                <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Download Pro Version</a> -->
+            </div> 
         </nav>
 
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/carousel-1.jpg" alt="Image">
+                    <img class="w-100" src="{% static 'Wardmember/img/carousel-1.jpg'%}" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
@@ -136,7 +144,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="img/carousel-2.jpg" alt="Image">
+                    <img class="w-100" src="{% static 'Wardmember/img/carousel-2.jpg'%}" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
@@ -187,16 +195,36 @@
             <div class="row gx-0">
                 <div class="col-lg-4 wow zoomIn" data-wow-delay="0.1s">
                     <div class="bg-primary shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
-                        <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
+                        <table >
+                            <tr>
+                                <td>#</td>
+                                <td>Information name</td>
+                                <td>Information description</td>
+                                <td>Information date</td>
+                                <td>Information validdate</td>
+                                
+                            </tr>
+                            {% for i in info %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.Iname.information_name}}</td>
+                                <td>{{i.Iname.information_description}}</td>
+                                <td>{{i.Iname.information_date}}</td>
+                                <td>{{i.Iname.information_validdate}}</td>
+                            </tr>
+                            {% endfor %}  
+                            </table>
+      
+                        <!-- <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
                             <i class="fa fa-users text-primary"></i>
                         </div>
                         <div class="ps-4">
                             <h5 class="text-white mb-0">Happy Clients</h5>
                             <h1 class="text-white mb-0" data-toggle="counter-up">12345</h1>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
-                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.3s">
+                <!-- <div class="col-lg-4 wow zoomIn" data-wow-delay="0.3s">
                     <div class="bg-light shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
                         <div class="bg-primary d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
                             <i class="fa fa-check text-white"></i>
@@ -206,8 +234,8 @@
                             <h1 class="mb-0" data-toggle="counter-up">12345</h1>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.6s">
+                </div> -->
+                <!-- <div class="col-lg-4 wow zoomIn" data-wow-delay="0.6s">
                     <div class="bg-primary shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
                         <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
                             <i class="fa fa-award text-primary"></i>
@@ -217,7 +245,7 @@
                             <h1 class="text-white mb-0" data-toggle="counter-up">12345</h1>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -545,7 +573,7 @@
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s">
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="{% static 'Wardmember/lib/img/testimonial-1.jpg'%}" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -557,7 +585,7 @@
                 </div>
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-2.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="{% static 'Wardmember/lib/img/testimonial-2.jpg'%}" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -569,7 +597,7 @@
                 </div>
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-3.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="{% static 'Wardmember/lib/img/testimonial-3.jpg'%}" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -581,7 +609,7 @@
                 </div>
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-4.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="{% static 'Wardmember/lib/img/testimonial-4.jpg'%}" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -608,7 +636,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team-1.jpg" alt="">
+                            <img class="img-fluid w-100" src="{% static 'Wardmember/lib/img/team-1.jpg'%}" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -625,7 +653,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team-2.jpg" alt="">
+                            <img class="img-fluid w-100" src="{% static 'Wardmember/lib/img/team-2.jpg'%}" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -642,7 +670,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team-3.jpg" alt="">
+                            <img class="img-fluid w-100" src="{% static 'Wardmember/lib/img/team-3.jpg'%}" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -673,7 +701,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="blog-item bg-light rounded overflow-hidden">
                         <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/blog-1.jpg" alt="">
+                            <img class="img-fluid" src="{% static 'Wardmember/lib/img/blog-1.jpg'%}" alt="">
                             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">Web Design</a>
                         </div>
                         <div class="p-4">
@@ -690,7 +718,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
                     <div class="blog-item bg-light rounded overflow-hidden">
                         <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/blog-2.jpg" alt="">
+                            <img class="img-fluid" src="{% static 'Wardmember/lib/img/blog-2.jpg'%}" alt="">
                             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">Web Design</a>
                         </div>
                         <div class="p-4">
@@ -707,7 +735,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
                     <div class="blog-item bg-light rounded overflow-hidden">
                         <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/blog-3.jpg" alt="">
+                            <img class="img-fluid" src="{% static 'Wardmember/img/blog-3.jpg'%}" alt="">
                             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">Web Design</a>
                         </div>
                         <div class="p-4">
@@ -732,15 +760,14 @@
         <div class="container py-5 mb-5">
             <div class="bg-white">
                 <div class="owl-carousel vendor-carousel">
-                    <img src="img/vendor-1.jpg" alt="">
-                    <img src="img/vendor-2.jpg" alt="">
-                    <img src="img/vendor-3.jpg" alt="">
-                    <img src="img/vendor-4.jpg" alt="">
-                    <img src="img/vendor-5.jpg" alt="">
-                    <img src="img/vendor-6.jpg" alt="">
-                    <img src="img/vendor-7.jpg" alt="">
-                    <img src="img/vendor-8.jpg" alt="">
-                    <img src="img/vendor-9.jpg" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-1.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-2.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-5.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-6.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-7.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-8.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-9.jpg'%}" alt="">
+                    <img src="{% static 'Wardmember/img/vendor-3.jpg'%}" alt="">
                 </div>
             </div>
         </div>
@@ -847,14 +874,14 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="{% static 'Wardmember/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'Wardmember/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'Wardmember/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'Wardmember/lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'Wardmember/lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{% static 'Wardmember/js/main.js' %}"></script>
 </body>
 
 </html>

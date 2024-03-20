@@ -42,8 +42,8 @@
             <td>{{i.mname.meeting_name}}</td>
             <td>{{i.mname.meeting_time}}</td>
             <td>{{i.mname.meeting_date}}</td>
-            <td><a href="{% url 'webadmin:delmname' i.id %}">Delete</a></td>
-            <td><a href="{% url 'webadmin:editmname' i.id %}">Edit</a></td>
+            <td><a href="{% url 'webwardmember:delmname' i.id %}">Delete</a></td>
+            <td><a href="{% url 'webwardmember:editmname' i.id %}">Edit</a></td>
 
         </tr>
 {% endfor %}
