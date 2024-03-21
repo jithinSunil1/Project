@@ -28,7 +28,7 @@ authe = firebase.auth()
 st = firebase.storage()
 # Create your views here.
 def complaint(request):
-    if 'Wmid' in request.session:    
+    if 'wmid' in request.session:    
         com=db.collection("tbl_complaint").stream()
         com_data=[]
         for i in com:
@@ -54,7 +54,7 @@ def delcomplaint(request,id):
     
 
 def feedback(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
         feed=db.collection("tbl_feedback").stream()
         feed_data=[]
         for i in feed:
@@ -119,14 +119,14 @@ def Reject(request,id):
 
 
 def Myprofile(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
         wm = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
         return render(request,"Wardmember/Myprofile.html",{'wm':wm})
     else:
         return render(request,"Guest/Login.html")
 
 def Editprofile(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
         wm = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
         if request.method=="POST":
             data={"wardmember_name":request.POST.get("name"),"wardmember_contact":request.POST.get("contact"),"wardmember_address":request.POST.get("address")}
@@ -138,7 +138,7 @@ def Editprofile(request):
         return render(request,"Guest/Login.html")     
 
 def changepassword(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
         wm = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
         email = wm["wardmember_email"]
         password_link = firebase_admin.auth.generate_password_reset_link(email) 
@@ -154,7 +154,7 @@ def changepassword(request):
 
 
 def viewres(request):
-  if 'Wmid' in request.session:
+  if 'wmid' in request.session:
     res=db.collection("tbl_Resources").stream()
     res_data=[]
     for i in res:
@@ -168,7 +168,7 @@ def viewres(request):
 
 
 def Accept(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
        vreq = db.collection("tbl_sendreq").where("viewstatus","==",1).stream()
        vreq_data = []
     for i in vreq:
@@ -179,7 +179,7 @@ def Accept(request):
     return render(request,"Wardmember/AcceptReq.html",{"viewreq":vreq_data})
 
 def Rejected(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
         vreq = db.collection("tbl_sendreq").where("viewstatus","==",2).stream()
         vreq_data = []
         for i in vreq:
@@ -192,7 +192,7 @@ def Rejected(request):
         return render(request,"Guest/Login.html")
 
 def viewresreq(request):
-    if 'Wmid' in request.session:
+    if 'wmid' in request.session:
        resq=db.collection("tbl_Resources").stream()
        resq_data=[]
        for i in resq:
@@ -258,32 +258,28 @@ def editmname(request,id):
 
 
 def userreg(request):
-    if 'Wmid' in request.session:
-      ward= db.collection("tbl_ward").stream()
-      ward_data = []
-      for i in ward:
-        ward_data.append({"ward":i.to_dict(),"id":i.id})
+    if 'wmid' in request.session:
+        ward= db.collection("tbl_ward").stream()
+        ward_data = []
+        for i in ward:
+            ward_data.append({"ward":i.to_dict(),"id":i.id})
         if request.method =="POST":
-          email = request.POST.get("email")
-          password = request.POST.get("password")
-        try:
-            user = firebase_admin.auth.create_user(email=email,password=password)
-        except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
-            return render(request,"Wardmember/Userreg.html",{"msg":error})
-        image = request.FILES.get("photo")
-        if image:
-              path = "UserPhoto/" + image.name
-              st.child(path).put(image)
-              d_url = st.child(path).get_url(None)
-
-        proof = request.FILES.get("proof")
-        if proof:
-            path = "UserProof/" + proof.name
-            st.child(path).put(proof)
-            k_url = st.child(path).get_url(None)
-       
-            
-
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            try:
+                user = firebase_admin.auth.create_user(email=email,password=password)
+            except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
+                return render(request,"Wardmember/Userreg.html",{"msg":error})
+            image = request.FILES.get("photo")
+            if image:
+                path = "UserPhoto/" + image.name
+                st.child(path).put(image)
+                d_url = st.child(path).get_url(None)
+            proof = request.FILES.get("proof")
+            if proof:
+                path = "UserProof/" + proof.name
+                st.child(path).put(proof)
+                k_url = st.child(path).get_url(None)
             db.collection("tbl_user").add({"user_id":user.uid,"user_name":request.POST.get("uname"),"user_contact":request.POST.get("contact"),"user_email":request.POST.get("email"),"user_address":request.POST.get("address"),"ward_id":request.POST.get("sel_ward"),"user_photo":d_url,"user_proof":k_url})
             return render(request,"Wardmember/Userreg.html")
         else:
@@ -292,7 +288,7 @@ def userreg(request):
         return render(request,"Guest/Login.html")
     
 def view_user(request):
-        if 'Wmid' in request.sesson:
+        if 'wmid' in request.sesson:
             wardmem = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
             ward = wardmem["ward_id"]
             user = db.collection("tbl_user").where('ward_id', '==', ward).stream()
