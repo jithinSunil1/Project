@@ -1,68 +1,123 @@
+{% extends 'Wardmember/header.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea,
+        input[type="file"],
+        input[type="password"] {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        /* You can add more styles as needed */
+    </style>
 </head>
 <body>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-    <table align="center" border="1">       
-         <tr>
-            <td>User name</td>
-            <td><input type="text" name="uname" id="" required="required" autocomplete="off" pattern="[a-zA-Z ]{4,15}" title="Enter a valid name"></td>
-        </tr>
-        <tr>
-            <td>User contact</td>
-            <td><input type="text" name="contact" id=""required="required" pattern="[0-9]{10,10}" title="Enter Correct Contact Number" autocomplete="off"></td>
-        </tr>
-        <tr>
-            <td>User email</td>
-            <td><input type="email" name="email" id="" pattern="/^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"></td>
-        </tr>
-        <tr>
-            <td>Wardname</td>
-            <td><select name="sel_ward" id="sel_ward">
-                <option value="">.Select.</option>
-                {% for i in ward %}
-                <option value="{{i.id}}">{{i.ward.ward_name}}</option>
-            {% endfor %}
-        </select></td>
-        </tr>
-        <tr>
-            <td>User  address</td>
-            <td><input type="text" name="address" id="" cols="30" rows="10" required="required"></td>
-        </tr>
-        <tr>
-            <td>User  photo</td>
-            <td><input type="file" name="photo" id=""required="required"></td>
-        </tr>
-        <tr>
-            <td>User  proof</td>
-            <td><input type="file" name="proof" id=""required="required"></td>
-        </tr>
-        <tr>
-            <td>password</td>
-            <td><input type="password" name="password" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></td>
-        </tr>
-        <tr>
-            <td>Confirm password</td>
-            <td><input type="password" name="cnfpassword" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="sumbit"></td>
-            <td></td>
-        </tr>
-         </table>
-
+        <table align="center" border="1">       
+             <tr>
+                <td>User name</td>
+                <td><input type="text" name="uname" id="" required="required" autocomplete="off" pattern="[a-zA-Z ]{4,15}" title="Enter a valid name"></td>
+            </tr>
+            <tr>
+                <td>User contact</td>
+                <td><input type="text" name="contact" id=""required="required" pattern="[0-9]{10,10}" title="Enter Correct Contact Number" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>User email</td>
+                <td><input type="email" name="email" id="" pattern="/^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"></td>
+            </tr>
+            <tr>
+                <td>Wardname</td>
+                <td><select name="sel_ward" id="sel_ward">
+                    <option value="">.Select.</option>
+                    {% for i in ward %}
+                    <option value="{{i.id}}">{{i.ward.ward_name}}</option>
+                {% endfor %}
+            </select></td>
+            </tr>
+            <tr>
+                <td>User  address</td>
+                <td><input type="text" name="address" id="" cols="30" rows="10" required="required"></td>
+            </tr>
+            <tr>
+                <td>User  photo</td>
+                <td><input type="file" name="photo" id=""required="required"></td>
+            </tr>
+            <tr>
+                <td>User  proof</td>
+                <td><input type="file" name="proof" id=""required="required"></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type="password" name="password" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></td>
+            </tr>
+            <tr>
+                <td>Confirm password</td>
+                <td><input type="password" name="cnfpassword" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="submit"></td>
+                <td></td>
+            </tr>
+        </table>
     </form>
     {% if msg %}
     <script>
         alert ("{{msg}}")
     </script>
     {% endif %}
-    
 </body>
 </html>
+{% endblock content  %}
