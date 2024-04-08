@@ -193,7 +193,7 @@ def Rejected(request):
 
 def viewresreq(request):
     if 'wmid' in request.session:
-       resq=db.collection("tbl_Resources").stream()
+       resq=db.collection("tbl_Request").stream()
        resq_data=[]
        for i in resq:
             data=i.to_dict()
@@ -344,3 +344,14 @@ def clearchat(request):
 def logout(request):
     del request.session["wmid"]
     return redirect("webguest:Login")   
+
+
+
+def accept(request,id):
+    db.collection("tbl_Request").document(id).update({"Request_Status":1})
+    return redirect("webwardmember:viewresreq")
+
+
+def reject(request,id):
+    db.collection("tbl_Request").document(id).update({"Request_Status":2})
+    return redirect("webwardmember:viewresreq")

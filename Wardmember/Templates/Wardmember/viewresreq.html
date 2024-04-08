@@ -20,6 +20,10 @@
                 <td>{{forloop.counter}}</td>
                 <td>{{i.user.user_name}}</td>
                 <td>{{i.Resource.Request_description}}</td>
+                
+                    <td><a href="{% url 'webwardmember:accept' i.id %}">Accept</a>
+                    <a href="{% url 'webwardmember:reject' i.id %}">Reject</a></td>
+                
                  </tr>
     {% endfor %}
         </table>

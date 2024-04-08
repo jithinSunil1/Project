@@ -7,25 +7,25 @@
 </head>
 <body>
     <form action="" method="post">
+
         <table>
             <tr>
                 <td>#</td>
-                <td>project Name</td>
-                <td>Description</td>
-                <td>Date</td>
+                <td>User Name</td>
+                <td>Request description</td>
                 <td>Action</td>
             </tr>
-            {% for i in res %}
+            {% for i in resq %}
             <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{i.res.project_name}}</td>
-                <td>{{i.res.Description}}</td>
-                <td>{{i.res.project_date}}</td>
-                <td><a href="{% url 'webuser:Request' i.id %}">Request</a></td>
-                
-     {% endfor %}
-        
-            
+                <td>{{i.user.user_name}}</td>
+                <td>{{i.Resource.Request_description}}</td>
+                 </tr>
+    {% endfor %}
+        </table>
+      
+
+
 
     </form>
     

@@ -72,21 +72,21 @@ def delfeedback(request,id):
     db.collection("tbl_feedback").document(id).delete()
     return redirect("webuser:feedback")
 
-def Request(request): 
-        if 'uid' in request.session:
-              req=db.collection("tbl_Request").stream()
-              req_data=[]
-              for i in req:
-               data=i.to_dict()
-               req_data.append({"Request":data,"id":i.id})
-              if request.method=="POST":
-                data={"user-id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":request.POST.get("date")}
-                db.collection("tbl_Request").add(data)
-                return redirect("webuser:Request")
-              else:
-                return render(request,"User/Request.html",{"req":req_data}) 
-        else:
-                return redirect("webguest:Login")
+def Request(request,id): 
+    req=db.collection("tbl_Request").stream()
+    req_data=[]
+    for i in req:
+        data=i.to_dict()
+        req_data.append({"Request":data,"id":i.id})
+    if request.method=="POST":
+        datedata=date.today()
+        data={"user_id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":str(datedata),"Request_Status":""}
+        db.collection("tbl_Request").add(data)
+        return redirect("webuser:viewres")
+    else:
+        return render(request,"User/Request.html",{"req":req_data}) 
+        
+       
    
     
 def homepage(request):

@@ -1,4 +1,4 @@
-{% extends 'Wardmember/Header' %}
+{% extends 'Wardmember/Header.html' %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,7 @@
             <td>{{i.sendreq.request_date}}</td>
            
             <td><a href="{% url 'webwardmember:Reject' i.id %}">Reject</a></td>
-            <td><a href="{% url 'webwardmember:chat' %}">Chat</a></td>
+            <td><a href="{% url 'webwardmember:chat' i.id %}">Chat</a></td>
         </tr>
         {% endfor %}
     </table>
