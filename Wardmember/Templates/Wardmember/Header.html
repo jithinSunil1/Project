@@ -62,7 +62,7 @@
 
 
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+    <!-- <div class="container-fluid bg-dark px-5 d-none d-lg-block">
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Topbar End -->
 
 
@@ -89,13 +89,19 @@
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
             <a href="index.html" class="navbar-brand p-0">
-                <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Startup</h1>
+                <style>
+                    h1 span {
+                        color: blue;
+                    }
+                </style>
+                <h1 ><Span> LAKSHYA</Span></h1>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
+            </button> -->
+            <!-- <div class="collapse navbar-collapse" id="navbarCollapse"> -->
+                <!-- <div class="navbar-nav ms-auto py-0"> -->
+                    <br><br><br>
                     <a href="{% url 'webwardmember:userreg' %}" class="nav-item nav-link active">User Registeration</a>
                     <a href="{% url 'webwardmember:viewreq' %}" class="nav-item nav-link active">view Request</a>
                     <a href="{% url 'webwardmember:Myprofile' %}" class="nav-item nav-link">My Profile</a>
@@ -103,7 +109,19 @@
                     <a href="{% url 'webwardmember:feedback' %}" class="nav-item nav-link">Feedback</a>
                     <a href="{% url 'webwardmember:Accept' %}" class="nav-item nav-link">Accept</a>
                     <a href="{% url 'webwardmember:mname' %}" class="nav-item nav-link">Meeting</a>
-                    <a href="{% url 'webwardmember:logout' %}" class="nav-item nav-link">Logout</a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Resource Requests
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="{% url 'webwardmember:viewresreq' %}">View Requests</a>
+                          <a class="dropdown-item" href="{% url 'webwardmember:acceptedresreq' %}">Accepted Requests</a>
+                          <a class="dropdown-item" href="{% url 'webwardmember:rejectedresreq' %}">Rejected Requests</a>
+                          <!-- Add more dropdown items here if needed -->
+                        </div>
+                      </div>
+                      <a href="{% url 'webwardmember:logout' %}" class="btn btn-primary">Logout</a>
+
                     <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu m-0">
@@ -173,7 +191,7 @@
     </div>
     <!-- Navbar & Carousel End -->
 
-    <br><br><br><br><br>
+    <br><br><br><br><br><br><br><br>
 {% block content %}
 {% endblock content %}
 

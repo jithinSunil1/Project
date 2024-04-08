@@ -25,6 +25,8 @@ urlpatterns = [
      path('delmname/<str:id>',views.delmname,name="delmname"),
      path('editmname/<str:id>',views.editmname,name="editmname"),
      path('logout/',views.logout,name="logout"),
+     path('rejectedresreq/',views.rejectedresreq,name="rejectedresreq"),
+     path('acceptedresreq/',views.acceptedresreq,name="acceptedresreq"),
      path('accept/<str:id>',views.accept,name="accept"),
      path('reject/<str:id>',views.reject,name="reject"),
 

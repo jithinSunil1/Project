@@ -193,15 +193,39 @@ def Rejected(request):
 
 def viewresreq(request):
     if 'wmid' in request.session:
-       resq=db.collection("tbl_Request").stream()
-       resq_data=[]
-       for i in resq:
+        resq=db.collection("tbl_Request").where("Request_Status","==",0).stream()
+        resq_data=[]
+        for i in resq:
             data=i.to_dict()
             user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
             resq_data.append({"resq":data,"id":i.id,"user":user})
-            return render(request,"Wardmember/viewresreq.html",{"resq":resq_data}) 
+        return render(request,"Wardmember/viewresreq.html",{"resq":resq_data}) 
     else:
         return render(request,"Guest/Login.html")   
+
+def acceptedresreq(request):
+    if 'wmid' in request.session:
+        resq=db.collection("tbl_Request").where("Request_Status","<=",4).where("Request_status","!=",2).stream()
+        resq_data=[]
+        for i in resq:
+            data=i.to_dict()
+            user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+            resq_data.append({"resq":data,"id":i.id,"user":user})
+        return render(request,"Wardmember/acceptedresreq.html",{"resq":resq_data}) 
+    else:
+        return render(request,"Guest/Login.html")           
+
+def rejectedresreq(request):
+    if 'wmid' in request.session:
+        resq=db.collection("tbl_Request").where("Request_Status","==",2).stream()
+        resq_data=[]
+        for i in resq:
+            data=i.to_dict()
+            user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+            resq_data.append({"resq":data,"id":i.id,"user":user})
+        return render(request,"Wardmember/rejectedresreq.html",{"resq":resq_data}) 
+    else:
+        return render(request,"Guest/Login.html") 
 
 
 
@@ -288,16 +312,16 @@ def userreg(request):
         return render(request,"Guest/Login.html")
     
 def view_user(request):
-        if 'wmid' in request.sesson:
-            wardmem = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
-            ward = wardmem["ward_id"]
-            user = db.collection("tbl_user").where('ward_id', '==', ward).stream()
-            userd = []
-            for i in user:
-             userd.append({"user":i.to_dict(),"id":i.id})
-            return render(request,"Wardmember/View_user.html",{"user":userd})
-        else:
-            return render(request,"Guest/Login.html")
+    if 'wmid' in request.sesson:
+        wardmem = db.collection("tbl_wardmember").document(request.session["wmid"]).get().to_dict()
+        ward = wardmem["ward_id"]
+        user = db.collection("tbl_user").where('ward_id', '==', ward).stream()
+        userd = []
+        for i in user:
+            userd.append({"user":i.to_dict(),"id":i.id})
+        return render(request,"Wardmember/View_user.html",{"user":userd})
+    else:
+        return render(request,"Guest/Login.html")
 
 ##################################################################################################################
 
@@ -349,9 +373,9 @@ def logout(request):
 
 def accept(request,id):
     db.collection("tbl_Request").document(id).update({"Request_Status":1})
-    return redirect("webwardmember:viewresreq")
+    return redirect("webwardmember:acceptedresreq")
 
 
 def reject(request,id):
     db.collection("tbl_Request").document(id).update({"Request_Status":2})
-    return redirect("webwardmember:viewresreq")
+    return redirect("webwardmember:rejectedresreq")

@@ -1,0 +1,78 @@
+{% extends 'Wardmember/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 70%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+
+        <table>
+            <tr>
+                <td>#</td>
+                <td>User Name</td>
+                <td>Request description</td>
+                <td>Action</td>
+            </tr>
+            {% for i in resq %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.user_name}}</td>
+                <td>{{i.resq.Request_description}}</td>
+                
+                   
+                   <td><a href="{% url 'webwardmember:reject' i.id %}">Reject</a>
+                {% if Request_Status == 3 %}
+                <span>  Approved </span>
+                {% endif %}
+            </td>
+                   
+                
+                 </tr>
+    {% endfor %}
+        </table>
+      
+
+
+
+    </form>
+    
+</body>
+</html>
+{% endblock content %}

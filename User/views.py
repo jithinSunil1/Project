@@ -87,7 +87,7 @@ def Request(request,id):
         return render(request,"User/Request.html",{"req":req_data}) 
         
        
-   
+
     
 def homepage(request):
     user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
@@ -101,7 +101,6 @@ def homepage(request):
     for i in info:
         data=i.to_dict()
         info_data.append({"Iname":data,"id":i.id})
-       
     return render(request,"User/homepage.html",{"wardmember":wmid,"info":info_data})
 
 
@@ -195,6 +194,19 @@ def viewres(request):
         
         return render(request,"User/viewres.html",{"res":res_data}) 
      else:
+        return redirect("webguest:Login")   
+
+
+def myresreq(request):
+    if 'uid' in request.session:
+        req=db.collection("tbl_Request").where("user_id","==",request.session["uid"]).stream()
+        req_data=[]
+        for i in req:
+            data=i.to_dict()
+            # res=db.collection("tbl_Resources").document(data[])
+            req_data.append({"req":data,"id":i.id,})
+        return render(request,"User/MyresReq.html",{"req":req_data}) 
+    else:
         return redirect("webguest:Login")   
 
 

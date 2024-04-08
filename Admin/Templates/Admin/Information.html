@@ -1,56 +1,131 @@
+{% extends 'Admin/Header.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        td, th {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="date"] {
+            width: calc(100% - 20px); /* Adjusting for padding */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <form action="" method="post">
-         {% csrf_token %}
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Information name</td>
+                <td><input type="text" name="Iname" id="" value="{{info_data.information_name}}"></td>
+            </tr>
+            <tr>
+                <td>Information description</td>
+                <td><textarea name="dis" id="" cols="30" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td>Information date</td>
+                <td><input type="date" name="date" id=""></td>
+            </tr>
+            <tr>
+                <td>Information valid date</td>
+                <td><input type="date" name="vdate" id=""></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
+
     <table>
         <tr>
-            <td>Information name</td>
-            <td><input type="text" name="Iname" id="" value="{{info_data.information_name}}">c</td>
-        </tr>
-        <tr>
-            <td>Information description</td>
-            <td><textarea name="dis" id="" cols="30" rows="10"></textarea></td>
-        </tr>
-        <tr>
-            <td>Information date</td>
-            <td><input type="date" name="date" id=""></td>
-        </tr>
-        <tr>
-            <td>Information validdate</td>
-            <td><input type="date" name="vdate" id=""></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="submit"></td>
-            <td></td>
-        </tr>
-    </table>
-     </form>
-     <table>
-        <tr>
-            <td>#</td>
-            <td>Information name</td>
-            <td>Information description</td>
-            <td>Information date</td>
-            <td>Information validdate</td>
-            <td>Action</td>
+            <th>#</th>
+            <th>Information name</th>
+            <th>Information description</th>
+            <th>Information date</th>
+            <th>Information valid date</th>
+            <th>Action</th>
         </tr>
         {% for i in info %}
         <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{i.Iname.information_name}}</td>
-            <td>{{i.Iname.information_description}}</td>
-            <td>{{i.Iname.information_date}}</td>
-            <td>{{i.Iname.information_validdate}}</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.Iname.information_name }}</td>
+            <td>{{ i.Iname.information_description }}</td>
+            <td>{{ i.Iname.information_date }}</td>
+            <td>{{ i.Iname.information_validdate }}</td>
             <td><a href="{% url 'webadmin:delIname' i.id %}">Delete</a></td>
             <td><a href="{% url 'webadmin:editIname' i.id %}">Edit</a></td>
-
         </tr>
-{% endfor %}
+        {% endfor %}
+    </table>
 </body>
 </html>
+{% endblock content %}

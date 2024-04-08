@@ -89,7 +89,7 @@
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
             <a href="index.html" class="navbar-brand p-0">
-                <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Startup</h1>
+                <h1 class="startapps"><i class="fa fa-user-tie me-2"></i>Startup</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
@@ -103,8 +103,21 @@
                     <a href="{% url 'webwardmember:feedback' %}" class="nav-item nav-link">Feedback</a>
                     <a href="{% url 'webwardmember:Accept' %}" class="nav-item nav-link">Accept</a>
                     <a href="{% url 'webwardmember:mname' %}" class="nav-item nav-link">Meeting</a>
-                    <a href="{% url 'webwardmember:viewresreq' %}" class="nav-item nav-link">viewresreq</a>
-                    <a href="{% url 'webwardmember:logout' %}" class="nav-item nav-link">Logout</a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Resource Requests
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="{% url 'webwardmember:viewresreq' %}">View Requests</a>
+                          <a class="dropdown-item" href="{% url 'webwardmember:acceptedresreq' %}">Accepted Requests</a>
+                          <a class="dropdown-item" href="{% url 'webwardmember:rejectedresreq' %}">Rejected Requests</a>
+                          <!-- Add more dropdown items here if needed -->
+                        </div>
+                      </div>
+                      
+                      
+                      <a href="{% url 'webwardmember:logout' %}" class="btn btn-primary">Logout</a>
+
                     <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu m-0">

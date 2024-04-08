@@ -4,36 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body><body>
-    <div id="tab">
-    <table cellpadding="10">
-        <tr>
-            <td>#</td>
-            <td>category</td>
-            <td>Description</td>
-            <td>User</td>
-            <td>Date</td>
-            <td>Action</td>
-        </tr>
-        {% for i in viewreq %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{i.cat.category_name}}</td>
-            <td>{{i.sendreq.sendreq_description}}</td>
-            <td>{{i.user.user_name}}</td>
-            <td>{{i.sendreq.request_date}}</td>
-            <td><a href="{% url 'webwardmember:Approve' i.id %}">Approve</a></td>
-          
-            
-        </tr>
-        {% endfor %}
-    </table>
-    </div>
-</body>
-    
-</form>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
 
-    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        a {
+            color: blue;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="tab">
+        <table cellpadding="10">
+            <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            {% for i in viewreq %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.cat.category_name }}</td>
+                <td>{{ i.sendreq.sendreq_description }}</td>
+                <td>{{ i.user.user_name }}</td>
+                <td>{{ i.sendreq.request_date }}</td>
+                <td><a href="{% url 'webwardmember:Approve' i.id %}">Approve</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

@@ -16,6 +16,7 @@ urlpatterns = [
      path("changepassword/",views.changepassword,name="changepassword"),
      path("viewres/",views.viewres,name="viewres"),
       path("logout/",views.logout,name="logout"),
+      path("myresreq/",views.myresreq,name="myresreq"),
 
 
      path('chat/<str:id>',views.chat,name="chat"),

@@ -336,3 +336,54 @@ def logout(request):
     return redirect("webguest:Login")   
 
 
+
+def viewresourcereq(request):
+    if 'wmid' in request.session:
+        resq=db.collection("tbl_Request").where("Request_Status","==",1).stream()
+        resq_data=[]
+        for i in resq:
+            data=i.to_dict()
+            user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+            ward=db.collection("tbl_ward").document(user["ward_id"]).get().to_dict()
+            resq_data.append({"resq":data,"id":i.id,"user":user,"ward":ward})
+        return render(request,"Admin/ViewResourseReq.html",{"resq":resq_data}) 
+    else:
+        return render(request,"Guest/Login.html") 
+
+
+def Approvereq(request,id):
+    db.collection("tbl_Request").document(id).update({"Request_Status":3})       
+    return redirect("webadmin:viewresourcereq") 
+
+def Rejectedreq(request,id):
+    db.collection("tbl_Request").document(id).update({"Request_Status":4})       
+    return redirect("webadmin:viewresourcereq") 
+
+
+def approveresreq(request):
+    if 'wmid' in request.session:
+        resq=db.collection("tbl_Request").where("Request_Status","==",3).stream()
+        resq_data=[]
+        for i in resq:
+            data=i.to_dict()
+            user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+            ward=db.collection("tbl_ward").document(user["ward_id"]).get().to_dict()
+            resq_data.append({"resq":data,"id":i.id,"user":user,"ward":ward})
+        return render(request,"Admin/ApprovedResReq.html",{"resq":resq_data}) 
+    else:
+        return render(request,"Guest/Login.html") 
+
+
+
+def Rejectedresreq(request):
+    if 'wmid' in request.session:
+        resq=db.collection("tbl_Request").where("Request_Status","==",4).stream()
+        resq_data=[]
+        for i in resq:
+            data=i.to_dict()
+            user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+            ward=db.collection("tbl_ward").document(user["ward_id"]).get().to_dict()
+            resq_data.append({"resq":data,"id":i.id,"user":user,"ward":ward})
+        return render(request,"Admin/RejectedResReq.html",{"resq":resq_data}) 
+    else:
+        return render(request,"Guest/Login.html") 

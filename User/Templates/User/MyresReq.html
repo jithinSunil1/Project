@@ -1,0 +1,36 @@
+{% extends 'User/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <td>#</td>
+                <td>project Name</td>
+                <td>Description</td>
+                <td>Date</td>
+                <td>Action</td>
+            </tr>
+            {% for i in res %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.res.project_name}}</td>
+                <td>{{i.res.Description}}</td>
+                <td>{{i.res.project_date}}</td>
+                <td><a href="{% url 'webuser:Request' i.id %}">Request</a></td>
+                
+     {% endfor %}
+        
+            
+
+    </form>
+    
+</body>
+</html>
+{% endblock content %}

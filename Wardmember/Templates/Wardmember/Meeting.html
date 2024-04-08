@@ -1,9 +1,82 @@
+{% extends 'Wardmember/header.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        form, table {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input[type="text"], input[type="time"], input[type="date"], input[type="submit"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        a {
+            color: blue;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <form action="" method="post">
@@ -11,7 +84,7 @@
         <table>
             <tr>
                 <td>Meeting name</td>
-                <td><input type="text" name="mname" id="" value="{{meet_data.meeting_name}}"></td>
+                <td><input type="text" name="mname" id="" value="{{ meet_data.meeting_name }}"></td>
             </tr>
             <tr>
                 <td>Meeting time</td>
@@ -22,8 +95,7 @@
                 <td><input type="date" name="date" id=""></td>
             </tr>
             <tr>
-                <td colspan="2"><input type="submit" value="submit"></td>
-                <td></td>
+                <td colspan="2"><input type="submit" value="Submit"></td>
             </tr>
         </table>
     </form>
@@ -33,19 +105,19 @@
             <td>Meeting name</td>
             <td>Meeting time</td>
             <td>Meeting date</td>
-
             <td>Action</td>
         </tr>
         {% for i in meet %}
         <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{i.mname.meeting_name}}</td>
-            <td>{{i.mname.meeting_time}}</td>
-            <td>{{i.mname.meeting_date}}</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.mname.meeting_name }}</td>
+            <td>{{ i.mname.meeting_time }}</td>
+            <td>{{ i.mname.meeting_date }}</td>
             <td><a href="{% url 'webwardmember:delmname' i.id %}">Delete</a></td>
             <td><a href="{% url 'webwardmember:editmname' i.id %}">Edit</a></td>
-
         </tr>
-{% endfor %}
+        {% endfor %}
+    </table>
 </body>
 </html>
+{% endblock content %}

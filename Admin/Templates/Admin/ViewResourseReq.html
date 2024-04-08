@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+
+        <table>
+            <tr>
+                <td>#</td>
+                <td>User Name</td>
+                <td>Ward</td>
+                <td>Request description</td>
+                <td>Action</td>
+            </tr>
+            {% for i in resq %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.user_name}}</td>
+                <td>{{i.ward.ward_name}}</td>
+                <td>{{i.resq.Request_description}}</td>
+                
+                    <td><a href="{% url 'webadmin:Approvereq' i.id %}">Approve</a>
+                    <a href="{% url 'webadmin:Rejectedreq' i.id %}">Reject</a></td>
+                
+                 </tr>
+    {% endfor %}
+        </table>
+      
+
+
+
+    </form>
+    
+</body>
+</html>

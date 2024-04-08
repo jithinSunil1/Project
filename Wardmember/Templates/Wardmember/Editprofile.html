@@ -4,6 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        @media screen and (max-width: 600px) {
+            /* Responsive styling for smaller screens */
+            input[type="text"], textarea {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <form action="" method="post">
@@ -12,16 +67,15 @@
         <table>
             <tr>
                 <td>Name</td>
-                <td><input type="text" name="name" id="" value="{{wm.wardmember_name}}"></td>
+                <td><input type="text" name="name" id="" value="{{ wm.wardmember_name }}"></td>
             </tr>
             <tr>
                 <td>Contact</td>
-                <td><input type="text" name="contact" id="" value="{{wm.wardmember_contact}}"></td>
+                <td><input type="text" name="contact" id="" value="{{ wm.wardmember_contact }}"></td>
             </tr>
-            
             <tr>
                 <td>Address</td>
-                <td><textarea name="address" id="" cols="30" rows="10">{{wm.wardmember_address}}</textarea></td>
+                <td><textarea name="address" id="" cols="30" rows="5">{{ wm.wardmember_address }}</textarea></td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="Submit"></td>

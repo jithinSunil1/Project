@@ -26,6 +26,11 @@ urlpatterns = [
         path('Resources/',views.resources,name="Resources"),
         path('delresources/<str:id>',views.delresources,name="delresources"),
         path("logout/",views.logout,name="logout"),
+        path("viewresourcereq/",views.viewresourcereq,name="viewresourcereq"),
+        path("Approvereq/<str:id>",views.Approvereq,name="Approvereq"),
+        path("Rejectedreq/<str:id>",views.Rejectedreq,name="Rejectedreq"),
+        path("approveresreq/",views.approveresreq,name="approveresreq"),
+        path("Rejectedresreq/",views.Rejectedresreq,name="Rejectedresreq"),
         
         
 
