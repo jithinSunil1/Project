@@ -205,13 +205,14 @@ def viewresreq(request):
 
 def acceptedresreq(request):
     if 'wmid' in request.session:
-        resq=db.collection("tbl_Request").where("Request_Status","<=",4).where("Request_status","!=",2).stream()
+        resq=db.collection("tbl_Request").where("Request_status","==",1).stream()
         resq_data=[]
         for i in resq:
             data=i.to_dict()
             user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
             resq_data.append({"resq":data,"id":i.id,"user":user})
-        return render(request,"Wardmember/acceptedresreq.html",{"resq":resq_data}) 
+        print(resq_data)    
+        return render(request,"Wardmember/acceptedresreq.html",{"":resq_data}) 
     else:
         return render(request,"Guest/Login.html")           
 

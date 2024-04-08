@@ -80,7 +80,7 @@ def Request(request,id):
         req_data.append({"Request":data,"id":i.id})
     if request.method=="POST":
         datedata=date.today()
-        data={"user_id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":str(datedata),"Request_Status":""}
+        data={"user_id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":str(datedata),"Request_Status":0}
         db.collection("tbl_Request").add(data)
         return redirect("webuser:viewres")
     else:
