@@ -56,10 +56,11 @@ def feedback(request):
           feed=db.collection("tbl_feedback").stream()
           feed_data=[]
           for i in feed:
-           data=i.to_dict()
+p          data=i.to_dict()
            feed_data.append({"feedback":data,"id":i.id})
            if request.method=="POST":
-               data={"feedback_content":request.POST.get("content"),"feedback_date":request.POST.get("date"),"user_id":request.session["uid"]}
+               datedata=date.today()
+               data={"feedback_content":request.POST.get("content"),"feedback_date":str(datedata),"user_id":request.session["uid"]}
                db.collection("tbl_feedback").add(data)
                return redirect("webuser:feedback")
            else:
@@ -80,7 +81,7 @@ def Request(request,id):
         req_data.append({"Request":data,"id":i.id})
     if request.method=="POST":
         datedata=date.today()
-        data={"user_id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":str(datedata),"Request_Status":0}
+        data={"resource_id":id,"user_id":request.session["uid"],"Request_description":request.POST.get("description"),"Request_date":str(datedata),"Request_Status":0}
         db.collection("tbl_Request").add(data)
         return redirect("webuser:viewres")
     else:
@@ -90,6 +91,7 @@ def Request(request,id):
 
     
 def homepage(request):
+    
     user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
     ward = user["ward_id"]
     wardd_member = db.collection("tbl_wardmember").where("ward_id", "==", ward).stream()
@@ -101,41 +103,51 @@ def homepage(request):
     for i in info:
         data=i.to_dict()
         info_data.append({"Iname":data,"id":i.id})
-    return render(request,"User/homepage.html",{"wardmember":wmid,"info":info_data})
+    resourse=db.collection("tbl_Request").where("Request_Status","==",3).stream()
+    resourse_data=[]    
+    for i in resourse:
+        data=i.to_dict()
+        user=db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+        # Project=db.collection("tbl_Resources").document(data["project_id"]).get().to_dict()
+        
+        resourse_data.append({"resourse":data,"id":i.id,"user":user,})    
+    # print(resourse_data)
+    return render(request,"User/homepage.html",{"wardmember":wmid,"info":info_data,"resourse":resourse_data})
+
 
 
 def sendreq(request):
-        if 'uid' in request.session:   
+    if 'uid' in request.session:   
+        wardmem = ""
+        cat=db.collection("tbl_category").stream()
+        cat_data=[]
+        for i in cat:
+            data=i.to_dict()
+            cat_data.append({"cat":data,"id":i.id})
+        result=[]
+        send_data=db.collection("tbl_sendreq").stream()
+        for i in send_data:
+            data=i.to_dict()
+            wardmember=db.collection("tbl_wardmember").document(data["wardmember_id"]).get().to_dict()
+            cate = db.collection("tbl_category").document(data["sendreq_category"]).get().to_dict()
+            print(cate)
+            result.append({"send":data,"id":i.id,"wardmember":wardmember,"cat":cate,"wardmemberid":data["wardmember_id"]})
+        if request.method=="POST":
+            
+            user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
+            wardid = user["ward_id"]
+            wardmember = db.collection("tbl_wardmember").where("ward_id", "==", wardid).stream()
             wardmem = ""
-            cat=db.collection("tbl_category").stream()
-            cat_data=[]
-            for i in cat:
-                data=i.to_dict()
-                cat_data.append({"cat":data,"id":i.id})
-            result=[]
-            send_data=db.collection("tbl_sendreq").stream()
-            for i in send_data:
-                data=i.to_dict()
-                wardmember=db.collection("tbl_wardmember").document(data["wardmember_id"]).get().to_dict()
-                cate = db.collection("tbl_category").document(data["sendreq_category"]).get().to_dict()
-                print(cate)
-                result.append({"send":data,"id":i.id,"wardmember":wardmember,"cat":cate,"wardmemberid":data["wardmember_id"]})
-            if request.method=="POST":
-                
-                user = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
-                wardid = user["ward_id"]
-                wardmember = db.collection("tbl_wardmember").where("ward_id", "==", wardid).stream()
-                wardmem = ""
-                for wm in wardmember:
-                    wardmem = wm.id
-                datedata = date.today()
-                data={"sendreq_category":request.POST.get("category"),"sendreq_description":request.POST.get("descrip"),"request_date":str(datedata),"wardmember_id":wardmem,"user_id":request.session["uid"],"viewstatus":0}
-                db.collection("tbl_sendreq").add(data)
-                return redirect("webuser:sendreq")
-            else:
-                return render(request,"User/sendreq.html",{"cat":cat_data,"send":result})
+            for wm in wardmember:
+                wardmem = wm.id
+            datedata = date.today()
+            data={"sendreq_category":request.POST.get("category"),"sendreq_description":request.POST.get("descrip"),"request_date":str(datedata),"wardmember_id":wardmem,"user_id":request.session["uid"],"viewstatus":0}
+            db.collection("tbl_sendreq").add(data)
+            return redirect("webuser:sendreq")
         else:
-            return redirect("webguest:Login")
+            return render(request,"User/sendreq.html",{"cat":cat_data,"send":result})
+    else:
+        return redirect("webguest:Login")
    
             
             
@@ -191,7 +203,6 @@ def viewres(request):
         for i in res:
             data=i.to_dict()
             res_data.append({"res":data,"id":i.id,})
-        
         return render(request,"User/viewres.html",{"res":res_data}) 
      else:
         return redirect("webguest:Login")   
@@ -208,6 +219,20 @@ def myresreq(request):
         return render(request,"User/MyresReq.html",{"req":req_data}) 
     else:
         return redirect("webguest:Login")   
+
+
+
+def approveresreq(request):
+    resources=db.collection("tbl_Request").where("Request_Status","==",3).stream()
+    resources_data=[]
+    for i in resources:
+        data=i.to_dict()
+        resq=db.collection("tbl_Resources").document(data["resource_id"]).get().to_dict()
+        user=db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+        ward=db.collection("tbl_ward").document(user["ward_id"]).get().to_dict()
+        resources_data.append({"res":data,"id":i.id,"resq":resq,"user":user,"ward":ward})
+    # print(user)
+    return render(request,"User/ApprovedRequest.html",{"res":resources_data})           
 
 
 

@@ -31,7 +31,8 @@ urlpatterns = [
         path("Rejectedreq/<str:id>",views.Rejectedreq,name="Rejectedreq"),
         path("approveresreq/",views.approveresreq,name="approveresreq"),
         path("Rejectedresreq/",views.Rejectedresreq,name="Rejectedresreq"),
-        
+         path('Reply/<str:id>',views.reply,name="reply"),
+         path('replyedcomplaints/',views.replyedcomplaints,name="replyedcomplaints"),
         
 
        

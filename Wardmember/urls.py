@@ -29,6 +29,7 @@ urlpatterns = [
      path('acceptedresreq/',views.acceptedresreq,name="acceptedresreq"),
      path('accept/<str:id>',views.accept,name="accept"),
      path('reject/<str:id>',views.reject,name="reject"),
+     path("approveresreq/",views.approveresreq,name="approveresreq"),
 
      
      path('chat/<str:id>',views.chat,name="chat"),

@@ -51,6 +51,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'Wardmember/css/style.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'form.css' %}">
 </head>
 
 <body>
@@ -117,6 +118,7 @@
                           <a class="dropdown-item" href="{% url 'webwardmember:viewresreq' %}">View Requests</a>
                           <a class="dropdown-item" href="{% url 'webwardmember:acceptedresreq' %}">Accepted Requests</a>
                           <a class="dropdown-item" href="{% url 'webwardmember:rejectedresreq' %}">Rejected Requests</a>
+                          <a class="dropdown-item" href="{% url 'webwardmember:approveresreq' %}">Approved Resources</a>
                           <!-- Add more dropdown items here if needed -->
                         </div>
                       </div>
@@ -192,8 +194,10 @@
     <!-- Navbar & Carousel End -->
 
     <br><br><br><br><br><br><br><br>
+    <div id="tab" align="center">
 {% block content %}
 {% endblock content %}
+</div>
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>

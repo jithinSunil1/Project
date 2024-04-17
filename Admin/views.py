@@ -338,14 +338,15 @@ def logout(request):
 
 
 def viewresourcereq(request):
-    if 'wmid' in request.session:
+    if 'aid' in request.session:
         resq=db.collection("tbl_Request").where("Request_Status","==",1).stream()
         resq_data=[]
         for i in resq:
             data=i.to_dict()
+            res=db.collection("tbl_Resources").document(data["resource_id"]).get().to_dict()
             user = db.collection("tbl_user").document(data["user_id"]).get().to_dict()
             ward=db.collection("tbl_ward").document(user["ward_id"]).get().to_dict()
-            resq_data.append({"resq":data,"id":i.id,"user":user,"ward":ward})
+            resq_data.append({"resq":data,"id":i.id,"user":user,"ward":ward,"res":res})
         return render(request,"Admin/ViewResourseReq.html",{"resq":resq_data}) 
     else:
         return render(request,"Guest/Login.html") 
@@ -361,7 +362,7 @@ def Rejectedreq(request,id):
 
 
 def approveresreq(request):
-    if 'wmid' in request.session:
+    if 'aid' in request.session:
         resq=db.collection("tbl_Request").where("Request_Status","==",3).stream()
         resq_data=[]
         for i in resq:
@@ -376,7 +377,7 @@ def approveresreq(request):
 
 
 def Rejectedresreq(request):
-    if 'wmid' in request.session:
+    if 'aid' in request.session:
         resq=db.collection("tbl_Request").where("Request_Status","==",4).stream()
         resq_data=[]
         for i in resq:
@@ -387,3 +388,35 @@ def Rejectedresreq(request):
         return render(request,"Admin/RejectedResReq.html",{"resq":resq_data}) 
     else:
         return render(request,"Guest/Login.html") 
+
+def reply(request,id):
+    if "aid" in request.session:
+        if request.method == "POST":
+                db.collection("tbl_complaint").document(id).update({"complaint_reply":request.POST.get("reply"),"complaint_status":1})
+                return render(request,"Admin/Reply.html",{"msg":"Reply Sended..."})
+        return render(request,"Admin/Reply.html")   
+    else:
+        return render(request,"Guest/Login.html")        
+
+
+def replyedcomplaints(request):
+    if 'aid' in request.session:
+    
+        user_data=[]
+        wm_data=[]
+        wcom = db.collection("tbl_complaint").where("wardmember_id", "!=",0).where("complaint_status", "==", 1).stream()
+        for i in wcom:
+            wdata = i.to_dict()
+            wm = db.collection("tbl_wardmember").document(wdata["wardmember_id"]).get().to_dict()
+            wm_data.append({"complaint":i.to_dict(),"id":i.id,"wm":wm})
+
+        ucom=db.collection("tbl_complaint").where("user_id","!=",0).where("complaint_status","==",1).stream()
+        for i in ucom:
+            udata = i.to_dict()
+            user = db.collection("tbl_user").document(udata["user_id"]).get().to_dict()
+            user_data.append({"complaint":i.to_dict(),"id":i.id,"user":user})  
+        return render(request,"Admin/ReplyedCompaint.html",{"wm":wm_data,"user":user_data})    
+    else:
+            return render(request,"Guest/Login.html")  
+
+            

@@ -15,7 +15,7 @@
         <td>WardMember Name</td>
         <td>complaint content</td>
         <td>complaint date</td>
-        <td>Action</td>
+        <td>Reply</td>
     </tr>
     {% for i in wm %}
     <tr>
@@ -23,7 +23,7 @@
         <td>{{i.wm.wardmember_name}}</td>
         <td>{{i.complaint.complaint_content}}</td>
         <td>{{i.complaint.complaint_date}}</td>
-        <td><a href="{% url 'webadmin:reply' i.id %}">Reply</a></td>
+        <td>{{i.complaint.complaint_reply}}</td>
     </tr>
 {% endfor %}
 </table>
@@ -35,7 +35,7 @@
         <td>User Name</td>
         <td>complaint content</td>
         <td>complaint date</td>
-        <td>Action</td>
+        <td>Reply</td>
     </tr>
     {% for i in user %}
     <tr>
@@ -43,7 +43,7 @@
         <td>{{i.user.user_name}}</td>
         <td>{{i.complaint.complaint_content}}</td>
         <td>{{i.complaint.complaint_date}}</td>
-        <td><a href="{% url 'webadmin:reply' i.id %}">Reply</a></td>
+        <td>{{i.complaint.complaint_reply}}</td>
     </tr>
 {% endfor %}
 </table>

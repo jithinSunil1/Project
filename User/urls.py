@@ -15,8 +15,9 @@ urlpatterns = [
      path("Editprofile/",views.Editprofile,name="Editprofile"),
      path("changepassword/",views.changepassword,name="changepassword"),
      path("viewres/",views.viewres,name="viewres"),
-      path("logout/",views.logout,name="logout"),
-      path("myresreq/",views.myresreq,name="myresreq"),
+     path("logout/",views.logout,name="logout"),
+     path("myresreq/",views.myresreq,name="myresreq"),
+     path("approveresreq/",views.approveresreq,name="approveresreq"),
 
 
      path('chat/<str:id>',views.chat,name="chat"),

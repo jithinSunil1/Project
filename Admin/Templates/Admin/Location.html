@@ -7,62 +7,7 @@
     <!-- Corrected the viewport meta tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        input[type="text"], input[type="submit"] {
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        /* Center submit button */
-        td[colspan="2"] {
-            text-align: center;
-        }
-
-        a {
-            color: #f44336;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    
 </head>
 <body>
     <form action="" method="post">
@@ -73,7 +18,7 @@
                 <td><input type="text" name="locname" value="{{ loc_data.location_name }}" ></td>
             </tr>
             <tr>
-                <!-- Utilizing colspan="2" and CSS to center the button -->
+                
                 <td colspan="2"><input type="submit" value="Submit"></td>
             </tr>
         </table>

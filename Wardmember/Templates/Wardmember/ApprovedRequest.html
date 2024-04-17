@@ -1,4 +1,4 @@
-{% extends 'Admin/header.html' %}
+{% extends 'Wardmember/Header.html' %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -9,36 +9,27 @@
 </head>
 <body>
     <form action="" method="post">
-
         <table>
             <tr>
                 <td>#</td>
                 <td>User Name</td>
                 <td>Ward</td>
                 <td>Project Name</td>
-                <td>Request description</td>
-                <td>Action</td>
+                <td>description</td>
+                <td></td>
             </tr>
-            {% for i in resq %}
+            {% for i in res %}
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{i.user.user_name}}</td>
                 <td>{{i.ward.ward_name}}</td>
-                <td>{{i.res.project_name}}</td>
-                <td>{{i.resq.Request_description}}</td>
-                <td><a href="{% url 'webadmin:Approvereq' i.id %}">Approve</a>
-                    <a href="{% url 'webadmin:Rejectedreq' i.id %}">Reject</a>
-                </td>
-                
+                <td>{{i.resq.project_name}}</td>
+                <td>{{i.res.Request_description}}</td>
+                <td></td>
             </tr>
-    {% endfor %}
+            {% endfor %}
         </table>
-      
-
-
-
     </form>
-    
 </body>
 </html>
 {% endblock content %}

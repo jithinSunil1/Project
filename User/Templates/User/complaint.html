@@ -1,3 +1,5 @@
+{% extends 'User/Header.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +31,7 @@
                 <td>#</td>
                 <td>complaint content</td>
                 <td>complaint date</td>
-                <!-- <td>complaint reply</td> -->
+                <td>complaint reply</td>
                 <td>Action</td>
             </tr>
             {% for i in com %}
@@ -37,8 +39,9 @@
                 <td>{{forloop.counter}}</td>
                 <td>{{i.complaint.complaint_content}}</td>
                 <td>{{i.complaint.complaint_date}}</td>
-                <!-- <td>{{i.complaint.complaint_reply}}</td> -->
+                <td>{{i.complaint.complaint_reply}}</td>
             <td><a href="{% url 'webwardmember:delcomplaint' i.id %}">Delete</a></td>
         {% endfor %}  
 </body>
 </html>
+{% endblock content %}

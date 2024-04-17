@@ -324,6 +324,18 @@ def view_user(request):
     else:
         return render(request,"Guest/Login.html")
 
+def approveresreq(request):
+    resources=db.collection("tbl_Request").where("Request_Status","==",3).stream()
+    resources_data=[]
+    for i in resources:
+        data=i.to_dict()
+        resq=db.collection("tbl_Resources").document(data["resource_id"]).get().to_dict()
+        user=db.collection("tbl_user").document(data["user_id"]).get().to_dict()
+        ward=db.collection("tbl_ward").document(user["ward_id"]).get().to_dict()
+        resources_data.append({"res":data,"id":i.id,"resq":resq,"user":user,"ward":ward})
+    # print(user)
+    return render(request,"User/ApprovedRequest.html",{"res":resources_data})                
+
 ##################################################################################################################
 
 def chat(request,id):
